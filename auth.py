@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash
 import requests as req
 import json
 
@@ -39,22 +39,24 @@ def logout():
 
 @auth.route('/sign-up', methods =['GET','POST'])
 def signup():
-    if request.method == 'post':
+    if request.method == 'POST':
         email = request.form.get("email")
         firstname = request.form.get("firstname")
+        print(firstname)
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
 
-        if len(email) > 4:
-            pass
+        if len(email) < 4 or None:
+            flash("Email tem que ser maior que 4 caracteres", category="error")
 
-        elif password1 == password2:
-            pass
+        elif len(firstname) <2:
+            flash("Nome muito curto", category="error")
 
-        elif len(firstname) < 2:
-            pass
+        elif password1 != password2:
+            flash("Suas senhas não coincide", category="error")
+
         else:
-            pass
+            flash("Conta Criada!", category="success")
 
     return render_template('sign-up.html')
 
