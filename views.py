@@ -41,7 +41,7 @@ def delete_note():
 
 @views.route('/get-news', methods=['GET'])
 def get_newslist():
-    api_key = "MXwF3W2UtbqkY1dNXLufRKiXTxaBgwtemhg7ZH45"
+    api_key = "DIGITE API THE NEWS API AQUI"
     country = "br"
     lang = "pt"
     url = f"https://api.thenewsapi.com/v1/news/top?api_token={api_key}&locale={country}&limit=5&language={lang}"
