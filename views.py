@@ -3,6 +3,7 @@ from flask_login import login_required,  current_user
 from models import Note
 from init import db
 import json
+import requests as req
 
 views = Blueprint('views',__name__)
 
@@ -10,7 +11,7 @@ views = Blueprint('views',__name__)
 @views.route('/', methods=['GET','POST'])
 @login_required
 def home():
-    if request.method =='POST':
+    if request.method == 'POST':
         note = request.form.get('note')
 
         if len(note) <1 :
@@ -37,4 +38,32 @@ def delete_note():
 
     return render_template("home.html", user=current_user)
 
+
+@views.route('/get-news', methods=['GET'])
+def get_newslist():
+    api_key = "MXwF3W2UtbqkY1dNXLufRKiXTxaBgwtemhg7ZH45"
+    country = "br"
+    lang = "pt"
+    url = f"https://api.thenewsapi.com/v1/news/top?api_token={api_key}&locale={country}&limit=5&language={lang}"
+    top = req.get(url)
+    json_data = top.json()
+    news = []
+    links = []
+    descricao = []
+    img_url = []
+
+    for article in json_data['data']:
+        title = article['title']
+        link = article['url']
+        desc = article['description']
+        img = article['image_url']
+        descricao.append(desc)
+        news.append(title)
+        links.append(link)
+        img_url.append(img)
+
+        print(url)
+    zipped_lists = zip(news ,links, descricao, img_url)
+    print(news)
+    return render_template("news.html", data=zipped_lists,user=current_user)
 

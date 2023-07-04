@@ -8,26 +8,6 @@ from flask_login import login_user, login_required, logout_user, current_user
 
 auth = Blueprint('auth', __name__)
 
-api_key = "MXwF3W2UtbqkY1dNXLufRKiXTxaBgwtemhg7ZH45"
-country = "br"
-lang = "pt"
-
-
-def get_top_news():
-    url = f"https://api.thenewsapi.com/v1/news/top?api_token={api_key}&locale={country}&limit=5&language={lang}"
-    top = req.get(url)
-    json_req = top.json()
-    list_titles = []
-    list_url = []
-    list_description = []
-    for i in json_req['data']:
-        list_titles.append(i['title'])
-        list_url.append(i["url"])
-        list_description.append(i["description"])
-
-    print(list_url, " ", list_titles, " ", list_description)
-    return list_url, list_description, list_titles
-
 
 @auth.route('/login', methods=['GET','POST'])
 def login():

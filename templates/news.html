@@ -1,7 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}News  {% endblock %}
+{% block title %}Home {% endblock %}
 
 {% block content %}
-<h1>Esta é a página de noticias</h1>
-{{noticia}}  {{url}}  {{descricao}}    {% endblock %}
+<h1 align="center">News</h1>
+<ul class="list-group list-group-flush" id="notes">
+        {% for news, links, descricao,img in data %}
+        <img src="{{ img }}", alt=" {{ descricao }}">
+         <li style="font-size:18px"><b> <a href ="{{ links }}"> {{ news }}</a> </b></li>
+
+
+        <p> {{ descricao}} </p>
+
+
+        {% endfor %}
+</ul>
+
+        {% endblock %}
